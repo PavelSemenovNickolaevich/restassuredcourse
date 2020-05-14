@@ -2,6 +2,7 @@ import config.TestConfig;
 import io.restassured.response.Response;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -53,5 +54,37 @@ public class GPathJSONTests extends TestConfig {
         Response response = get("teams/18/");
         Integer sumOfShirtNumber = response.path("squad.collect{it.id}.sum()");
         System.out.println(sumOfShirtNumber);
+    }
+
+    //Gpath Json Part3 - Combining finds and using parameters
+    @Test
+    public void extractMapOfObjectWithFindAndFindAll() {
+
+        String position = "Defender";
+        String nationality  = "Germany";
+
+        Response response = get("teams/18/");
+        Map<String, ?> playerOfCertainPosition = response.
+                path("squad.findAll{it.position == '%s'  }.find{it.nationality == '%s'}",
+                        position, nationality);
+        System.out.println(playerOfCertainPosition);
+
+
+    }
+
+    @Test
+    public void extractMultiplePlayers() {
+        String position = "Defender";
+        String nationality  = "Sweden";
+
+        Response response = get("teams/18/");
+
+        ArrayList<Map<String,?>>allPlayersCertainNation =
+                response.path("squad.findAll{it.position == '%s'  }.findAll{it.nationality == '%s'}",
+                        position, nationality);
+        System.out.println(allPlayersCertainNation);
+
+
+
     }
 }
