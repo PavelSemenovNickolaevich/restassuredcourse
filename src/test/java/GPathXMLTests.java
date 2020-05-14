@@ -6,7 +6,7 @@ import org.junit.Test;
 import static io.restassured.RestAssured.get;
 
 public class GPathXMLTests extends TestConfig {
-//GPath xml part 1 - setup and basic find
+    //GPath xml part 1 - setup and basic find
     @Test
     public void getFirstGameList() {
 
@@ -17,5 +17,13 @@ public class GPathXMLTests extends TestConfig {
 
     }
 
+    //GPath xml part 2 - attributes
+    @Test
+    public void getAttributesName() {
+        Response response = get(EndPoint.VIDEOGAMES);
+        String category = response.path("videoGames.videoGame[0].@category");
 
+        System.out.println(category);
+
+    }
 }
