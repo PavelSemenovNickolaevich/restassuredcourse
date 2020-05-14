@@ -56,7 +56,7 @@ public class GPathJSONTests extends TestConfig {
         System.out.println(sumOfShirtNumber);
     }
 
-    //Gpath Json Part3 - Combining finds and using parameters
+    //Gpath Json Part4 - Combining finds and using parameters
     @Test
     public void extractMapOfObjectWithFindAndFindAll() {
 
