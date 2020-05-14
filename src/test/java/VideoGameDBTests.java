@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.matcher.RestAssuredMatchers.matchesXsdInClasspath;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class VideoGameDBTests extends TestConfig {
 
@@ -87,6 +88,14 @@ public class VideoGameDBTests extends TestConfig {
                 when().get(EndPoint.SINGLE_VIEOGAME).then().
                 body(matchesXsdInClasspath(" VideoGame.xsd"));
 
+    }
+
+    //Validating Response against a JSON Schema
+    @Test
+    public void testVideoGameSchemaJSON() {
+        given().pathParam("videoGameId", 5).
+                when().get(EndPoint.SINGLE_VIEOGAME).then().
+                body(matchesJsonSchemaInClasspath("VideoGameJsonSchema.json"));
     }
 
 
