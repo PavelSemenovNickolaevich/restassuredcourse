@@ -31,12 +31,27 @@ public class GPathJSONTests extends TestConfig {
     }
 
     @Test
-    public  void extrctListOfValuesWithFindAll() {
+    public  void extractListOfValuesWithFindAll() {
         Response response = get("teams/18/");
         List<String> playersNationality = response.
                 path("squad.findAll{it.name != 'Tobias Sippel'}.nationality");
         for (String allNationality : playersNationality) {
             System.out.println(allNationality);
         }
+    }
+
+    //Gpath Json Part3 - Using min max collect and sum
+    @Test
+    public void extractSingleValueWithHighestNumber() {
+        Response response = get("teams/18/");
+        String playerName = response.path("squad.min{it.shirtNumber}name"); //if min change max
+        System.out.println(playerName);
+    }
+
+    @Test
+    public void extractsMultipleValueAndSumThem() {
+        Response response = get("teams/18/");
+        Integer sumOfShirtNumber = response.path("squad.collect{it.id}.sum()");
+        System.out.println(sumOfShirtNumber);
     }
 }
