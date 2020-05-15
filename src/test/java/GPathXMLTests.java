@@ -62,11 +62,26 @@ public class GPathXMLTests extends TestConfig {
     public void getSingleNodes() {
         String responseAsString = get(EndPoint.VIDEOGAMES).asString();
         Node videoGame =XmlPath.from(responseAsString).
-                get("videGames.videoGame.find{videoGame -> def name = vodeoGame.name; name == 'Tetris'}");
+                get("videGames.videoGame.find{videoGame -> def name = videoGame.name; name == 'Resident Evil 4'}");
 
         String videoGameName = videoGame.get("name").toString();
         System.out.println(videoGameName);
     }
+
+    //GPath xml part 6 - Depth First Search
+    @Test
+    public  void getSingleElementDepthFirst() {
+        String responseAsString = get(EndPoint.VIDEOGAMES).asString();
+
+        int reviewScore = XmlPath.from(responseAsString).
+                getInt("**.find{ it.name == 'Gran Turismo 3'}.reviewScore");
+
+        System.out.println(reviewScore);
+    }
+
+    //GPath xml part 7 - Get all nodes based on a condition
+
+
 
 
 
