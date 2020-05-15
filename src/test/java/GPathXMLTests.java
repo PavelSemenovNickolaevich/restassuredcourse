@@ -61,7 +61,7 @@ public class GPathXMLTests extends TestConfig {
     @Test
     public void getSingleNodes() {
         String responseAsString = get(EndPoint.VIDEOGAMES).asString();
-        Node videoGame =XmlPath.from(responseAsString).
+        Node videoGame = XmlPath.from(responseAsString).
                 get("videGames.videoGame.find{videoGame -> def name = videoGame.name; name == 'Resident Evil 4'}");
 
         String videoGameName = videoGame.get("name").toString();
@@ -70,7 +70,7 @@ public class GPathXMLTests extends TestConfig {
 
     //GPath xml part 6 - Depth First Search
     @Test
-    public  void getSingleElementDepthFirst() {
+    public void getSingleElementDepthFirst() {
         String responseAsString = get(EndPoint.VIDEOGAMES).asString();
 
         int reviewScore = XmlPath.from(responseAsString).
@@ -80,9 +80,20 @@ public class GPathXMLTests extends TestConfig {
     }
 
     //GPath xml part 7 - Get all nodes based on a condition
+    @Test
+    public void getAllNodesBasedOnACondition() {
+        String responseAsString = get(EndPoint.VIDEOGAMES).asString();
 
+        int reviewScore = 90;
 
+        List<Node> allVideoGamesOverCertainScore = XmlPath.from(responseAsString).get(
+                "videoGames.videoGame.findAll{it.reviewScore.toFloat() >= " + reviewScore + " }");
 
+        System.out.println(allVideoGamesOverCertainScore);
+        for(Node  videoGames: allVideoGamesOverCertainScore) {
+            System.out.println(videoGames);
+        }
 
+    }
 
 }
