@@ -1,7 +1,11 @@
 import config.EndPoint;
 import config.TestConfig;
+import io.restassured.path.xml.XmlPath;
+import io.restassured.path.xml.element.Node;
 import io.restassured.response.Response;
 import org.junit.Test;
+
+import java.util.List;
 
 import static io.restassured.RestAssured.get;
 
@@ -26,4 +30,19 @@ public class GPathXMLTests extends TestConfig {
         System.out.println(category);
 
     }
+
+    //GPath xml part 3 - extract all XML nodes with findAll
+    @Test
+    public void getListOfXMLNodes() {
+
+        String responseAsString = get(EndPoint.VIDEOGAMES).asString();
+
+        List<Node> allResults = XmlPath.from(responseAsString).
+                get("videoGames.videoGame.findAll {element -> return element}");
+
+        System.out.println(allResults.get(2).get("name").toString());
+
+    }
+    
+
 }
