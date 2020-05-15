@@ -43,6 +43,21 @@ public class GPathXMLTests extends TestConfig {
         System.out.println(allResults.get(2).get("name").toString());
 
     }
-    
+
+    //GPath xml part 4 - extract all XML nodes with an attribute
+    @Test
+    public void getListOfXMLNodesByFindAttribute() {
+
+        String responseAsString = get(EndPoint.VIDEOGAMES).asString();
+
+        List<Node> allDrivingGames = XmlPath.from(responseAsString).
+                get("videoGames.videoGame.findAll {videoGame -> def category = videoGame.@category; category == 'Driving'}");
+
+        System.out.println(allDrivingGames.get(0).get("name").toString());
+
+    }
+
+
+
 
 }
