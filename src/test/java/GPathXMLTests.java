@@ -57,6 +57,16 @@ public class GPathXMLTests extends TestConfig {
 
     }
 
+    //GPath xml part 5 - extract single node
+    @Test
+    public void getSingleNodes() {
+        String responseAsString = get(EndPoint.VIDEOGAMES).asString();
+        Node videoGame =XmlPath.from(responseAsString).
+                get("videGames.videoGame.find{videoGame -> def name = vodeoGame.name; name == 'Tetris'}");
+
+        String videoGameName = videoGame.get("name").toString();
+        System.out.println(videoGameName);
+    }
 
 
 
